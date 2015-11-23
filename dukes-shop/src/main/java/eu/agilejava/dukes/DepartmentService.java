@@ -23,28 +23,47 @@
  */
 package eu.agilejava.dukes;
 
-import java.util.HashSet;
-import java.util.Set;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
+import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@ApplicationPath("resources")
-public class MyApplication extends Application {
+@Singleton
+public class DepartmentService {
 
-    @Override
-    public Set<Class<?>> getClasses() {
+    private List<Department> departments;
 
-        Set<Class<?>> classes = new HashSet<>();
+    public void addDepartment(Department department) {
+        department.setId(UUID.randomUUID().toString());
+        departments.add(department);
+    }
 
-        classes.add(ApiKeyFilter.class);
+    public List<Department> findAll() {
+        return departments;
+    }
+    
+    public Department find(final String id) {
+        return departments.stream()
+                .filter(d -> d.getId().equals(id))
+                .findAny()
+                .orElseThrow(NoSuchElementException::new);
 
-        classes.add(DepartmentsResource.class);
+    }
 
-        return classes;
+    @PostConstruct
+    private void init() {
+        departments = new ArrayList<>();
+        Department dep = new Department();
+        dep.setId(UUID.randomUUID().toString());
+        dep.setName("Jalla");
+
+        departments.add(dep);
     }
 
 }

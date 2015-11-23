@@ -23,28 +23,37 @@
  */
 package eu.agilejava.dukes;
 
-import java.util.HashSet;
-import java.util.Set;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@ApplicationPath("resources")
-public class MyApplication extends Application {
+public class Department {
+    
+    private String id;
+    
+    @NotNull
+    @Size(min = 2, max = 30 ,message = "ett riktigt namn tack!!")
+    private String name;
 
-    @Override
-    public Set<Class<?>> getClasses() {
-
-        Set<Class<?>> classes = new HashSet<>();
-
-        classes.add(ApiKeyFilter.class);
-
-        classes.add(DepartmentsResource.class);
-
-        return classes;
+    public String getId() {
+        return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
 }
