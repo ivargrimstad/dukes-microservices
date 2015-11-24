@@ -21,31 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package eu.agilejava.dukes;
+package eu.agilejava.dukes.department;
 
-import eu.agilejava.dukes.department.DepartmentsResource;
-import java.util.HashSet;
-import java.util.Set;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import java.util.List;
+import java.util.UUID;
+import javax.cache.annotation.CacheKey;
+import javax.cache.annotation.CacheValue;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@ApplicationPath("resources")
-public class MyApplication extends Application {
+@Stateless
+public class DepartmentService {
 
-    @Override
-    public Set<Class<?>> getClasses() {
+    @Inject
+    private DepartmentRepository departmentRepository;
 
-        Set<Class<?>> classes = new HashSet<>();
+    public void addDepartment(@CacheKey @CacheValue Department department) {
+        department.setUuid(UUID.randomUUID().toString());
+        departmentRepository.create(department);
+    }
 
-        classes.add(ApiKeyFilter.class);
+    public List<Department> findAll() {
+        return departmentRepository.findAll();
+    }
 
-        classes.add(DepartmentsResource.class);
+    public Department find(final String uuid) throws SuperException {
 
-        return classes;
+        return departmentRepository.findByUUID(uuid)
+                .orElseThrow(SuperException::new);
     }
 
 }
