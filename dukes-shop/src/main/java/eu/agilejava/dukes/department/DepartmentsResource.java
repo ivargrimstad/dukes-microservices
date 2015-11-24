@@ -36,6 +36,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -48,7 +49,7 @@ public class DepartmentsResource {
 
     @Context
     private UriInfo uriInfo;
-    
+
     @EJB
     private DepartmentService departmentService;
 
@@ -84,7 +85,14 @@ public class DepartmentsResource {
     @Produces(APPLICATION_JSON)
     @Path("{id}")
     public Response getDepartment(@PathParam("id") String id) {
-   
-        return Response.ok(departmentService.find(id)).build();
+
+        try {
+
+            return Response.ok(departmentService.find(id)).build();
+
+        } catch (SuperException e) {
+            
+            return Response.status(Status.NOT_FOUND).build();
+        }
     }
 }
