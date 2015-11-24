@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package eu.agilejava.dukes;
+package eu.agilejava.dukes.department;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

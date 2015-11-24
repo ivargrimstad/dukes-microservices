@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package eu.agilejava.dukes;
+package eu.agilejava.dukes.department;
 
+import eu.agilejava.dukes.ApiKeyRequired;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
