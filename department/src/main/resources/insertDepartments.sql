@@ -1,0 +1,1 @@
+--insert into department(id, uuid, name) values (1,'be0ee954-c7fb-4d0b-9949-68f3e9cbe9eb', 'jalla')
