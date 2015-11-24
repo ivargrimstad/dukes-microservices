@@ -23,36 +23,13 @@
  */
 package eu.agilejava.dukes.department;
 
-import java.util.List;
-import java.util.UUID;
-import javax.cache.annotation.CacheKey;
-import javax.cache.annotation.CacheValue;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
+import javax.ejb.ApplicationException;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@Stateless
-public class DepartmentService {
-
-    @Inject
-    private DepartmentRepository departmentRepository;
-
-    public void addDepartment(@CacheKey @CacheValue Department department) {
-        department.setUuid(UUID.randomUUID().toString());
-        departmentRepository.create(department);
-    }
-
-    public List<Department> findAll() {
-        return departmentRepository.findAll();
-    }
-
-    public Department find(final String uuid) throws SuperException {
-
-        return departmentRepository.findByUUID(uuid)
-                .orElseThrow(SuperException::new);
-    }
-
+@ApplicationException
+public class SuperException extends RuntimeException{
+    
 }
