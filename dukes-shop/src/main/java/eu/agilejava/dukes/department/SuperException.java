@@ -21,49 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package eu.agilejava.dukes;
+package eu.agilejava.dukes.department;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
-import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
+import javax.ejb.ApplicationException;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@Singleton
-public class DepartmentService {
-
-    private List<Department> departments;
-
-    public void addDepartment(Department department) {
-        department.setId(UUID.randomUUID().toString());
-        departments.add(department);
-    }
-
-    public List<Department> findAll() {
-        return departments;
-    }
+@ApplicationException
+public class SuperException extends RuntimeException{
     
-    public Department find(final String id) {
-        return departments.stream()
-                .filter(d -> d.getId().equals(id))
-                .findAny()
-                .orElseThrow(NoSuchElementException::new);
-
-    }
-
-    @PostConstruct
-    private void init() {
-        departments = new ArrayList<>();
-        Department dep = new Department();
-        dep.setId(UUID.randomUUID().toString());
-        dep.setName("Jalla");
-
-        departments.add(dep);
-    }
-
 }
