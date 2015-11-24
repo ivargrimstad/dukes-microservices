@@ -23,47 +23,35 @@
  */
 package eu.agilejava.dukes.department;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
-import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@Singleton
+@Stateless
 public class DepartmentService {
 
-    private List<Department> departments;
-
+    @Inject
+    private DepartmentRepository departmentRepository;
+    
     public void addDepartment(Department department) {
-        department.setId(UUID.randomUUID().toString());
-        departments.add(department);
+        department.setUuid(UUID.randomUUID().toString());
+        departmentRepository.create(department);
     }
 
     public List<Department> findAll() {
-        return departments;
+        return departmentRepository.findAll();
     }
     
-    public Department find(final String id) {
-        return departments.stream()
-                .filter(d -> d.getId().equals(id))
-                .findAny()
+    public Department find(final String uuid) {
+    
+        return departmentRepository.findByUUID(uuid)
                 .orElseThrow(NoSuchElementException::new);
-
-    }
-
-    @PostConstruct
-    private void init() {
-        departments = new ArrayList<>();
-        Department dep = new Department();
-        dep.setId(UUID.randomUUID().toString());
-        dep.setName("Jalla");
-
-        departments.add(dep);
     }
 
 }

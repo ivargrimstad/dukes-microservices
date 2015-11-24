@@ -77,7 +77,7 @@ public class DepartmentsResource {
     public Response create(@Valid Department d) {
 
         departmentService.addDepartment(d);
-        return Response.created(uriInfo.getAbsolutePathBuilder().segment(d.getId()).build()).build();
+        return Response.created(uriInfo.getAbsolutePathBuilder().segment(d.getUuid()).build()).build();
     }
 
     @GET
