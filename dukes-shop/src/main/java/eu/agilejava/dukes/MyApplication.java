@@ -23,6 +23,7 @@
  */
 package eu.agilejava.dukes;
 
+import eu.agilejava.dukes.department.DepartmentsResource;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
