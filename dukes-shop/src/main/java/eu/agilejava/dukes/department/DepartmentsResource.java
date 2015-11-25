@@ -77,8 +77,10 @@ public class DepartmentsResource {
     @ApiKeyRequired
     public Response create(@Valid Department d) {
 
-        departmentService.addDepartment(d);
-        return Response.created(uriInfo.getAbsolutePathBuilder().segment(d.getUuid()).build()).build();
+        String uuid = departmentService.addDepartment(d)
+                .orElseThrow(SuperException::new);
+        
+        return Response.created(uriInfo.getAbsolutePathBuilder().segment(uuid).build()).build();
     }
 
     @GET

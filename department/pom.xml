@@ -56,7 +56,7 @@
                     <env>
                         <department.host>http://192.168.59.103</department.host>
                         <department.port>8094</department.port>
-                        <department.serviceRoot>department/api</department.serviceRoot>
+                        <department.serviceRoot>department/resources</department.serviceRoot>
                         <department.snoopService>192.168.59.103:8081/snoop-service/</department.snoopService>            
                     </env>
                     <entryPoint>["/opt/jboss/wildfly/bin/standalone.sh", "-c", "standalone-snoop.xml", "-b", "0.0.0.0"]</entryPoint>

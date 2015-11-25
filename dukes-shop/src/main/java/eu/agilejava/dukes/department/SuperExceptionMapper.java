@@ -23,33 +23,21 @@
  */
 package eu.agilejava.dukes.department;
 
-import java.util.List;
-import java.util.UUID;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@Stateless
-public class DepartmentService {
+@Provider
+public class SuperExceptionMapper implements ExceptionMapper<SuperException> {
 
-    @Inject
-    private DepartmentRepository departmentRepository;
-
-    public void addDepartment(Department department) {
-        departmentRepository.create(department);
+    @Override
+    public Response toResponse(SuperException exception) {
+        return Response.notModified().build();
     }
-
-    public List<Department> findAll() {
-        return departmentRepository.findAll();
-    }
-
-    public Department find(final String uuid) throws SuperException {
-
-        return departmentRepository.findByUUID(uuid)
-                .orElseThrow(SuperException::new);
-    }
-
+    
+    
 }
