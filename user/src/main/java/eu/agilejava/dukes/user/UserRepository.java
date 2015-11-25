@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package eu.agilejava.dukes.department;
+package eu.agilejava.dukes.user;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +32,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -56,7 +57,7 @@ public class UserRepository {
         return Optional.ofNullable(em.find(User.class, id));
     }
 
-    public Optional<User> findByUUID(final String uuid) {
+    public Optional<User> findByEmail(final String email) {
 
         Optional<User> returnValue = Optional.empty();
 
@@ -66,7 +67,7 @@ public class UserRepository {
             CriteriaQuery<User> cq = cb.createQuery(User.class);
 
             Root<User> root = cq.from(User.class);
-            cq.select(root).where(cb.equal(root.get("uuid"), uuid));
+            cq.select(root).where(cb.equal(root.get("email"), email));
 
             returnValue = Optional.of(em.createQuery(cq).getSingleResult());
 
@@ -77,6 +78,7 @@ public class UserRepository {
         return returnValue;
     }
 
+    @Transactional
     public void create(User department) {
         em.persist(department);
     }

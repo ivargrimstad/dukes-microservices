@@ -23,7 +23,7 @@
  */
 package eu.agilejava.dukes;
 
-import eu.agilejava.dukes.department.UsersResource;
+import eu.agilejava.dukes.user.UsersResource;
 import eu.agilejava.snoop.annotation.EnableSnoopClient;
 import java.util.HashSet;
 import java.util.Set;

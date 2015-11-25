@@ -21,17 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package eu.agilejava.dukes.department;
+package eu.agilejava.dukes.user;
 
 import java.io.Serializable;
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.AUTO;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -43,7 +40,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "user", uniqueConstraints
-        = @UniqueConstraint(columnNames = "uuid"))
+        = @UniqueConstraint(columnNames = "email"))
 public class User implements Serializable {
 
     private static final long serialVersionUID = 675831561365333123L;
@@ -53,14 +50,19 @@ public class User implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "uuid")
-    private String uuid;
-
     @Column(name = "name")
     @NotNull
     @Size(min = 2, max = 30, message = "ett riktigt namn tack!!")
     private String name;
 
+    @Column(name ="email")
+    @NotNull
+    private String email;
+   
+    @Column(name ="phone")
+    @NotNull
+    private String phone;
+    
     public Long getId() {
         return id;
     }
@@ -69,12 +71,20 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getName() {
