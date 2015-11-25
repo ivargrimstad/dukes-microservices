@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>eu.agilejava.dukes</groupId>
-    <artifactId>department</artifactId>
+    <artifactId>user</artifactId>
     <packaging>war</packaging>
 
-    <name>Duke's Departments</name>
+    <name>Duke's Users</name>
 
     <parent>
         <groupId>eu.agilejava.dukes</groupId>
@@ -54,10 +54,10 @@
                         </resource>
                     </resources>   
                     <env>
-                        <department.host>http://192.168.59.103</department.host>
-                        <department.port>8094</department.port>
-                        <department.serviceRoot>department/resources</department.serviceRoot>
-                        <department.snoopService>192.168.59.103:8081/snoop-service/</department.snoopService>            
+                        <user.host>http://192.168.59.103</user.host>
+                        <user.port>8095</user.port>
+                        <user.serviceRoot>user/resources</user.serviceRoot>
+                        <user.snoopService>192.168.59.103:8081/snoop-service/</user.snoopService>            
                     </env>
                     <entryPoint>["/opt/jboss/wildfly/bin/standalone.sh", "-c", "standalone-dukes.xml", "-b", "0.0.0.0"]</entryPoint>
                 </configuration>
