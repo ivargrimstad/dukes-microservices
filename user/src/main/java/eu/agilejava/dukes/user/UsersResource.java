@@ -21,37 +21,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package eu.agilejava.dukes.department;
+package eu.agilejava.dukes.user;
 
 import eu.agilejava.dukes.ApiKeyRequired;
-import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
+import java.util.List;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import static javax.ws.rs.core.Response.Status.CONFLICT;
 import javax.ws.rs.core.UriInfo;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@ApplicationScoped
 @Path("users")
 public class UsersResource {
 
     @Context
     private UriInfo uriInfo;
 
-    @EJB
-    private UserService userService;
+    @Inject
+    private UserRepository userRepository;
 
     /**
      * /departments
@@ -60,9 +63,9 @@ public class UsersResource {
      */
     @GET
     @Produces(APPLICATION_JSON)
-    public Response allDepartments() {
-
-        return Response.ok(userService.findAll()).build();
+    public Response allUsers() {
+        return Response.ok(new GenericEntity<List<User>>(userRepository.findAll()) {
+        }).build();
     }
 
     /**
@@ -75,24 +78,22 @@ public class UsersResource {
     @POST
     @Consumes(APPLICATION_JSON)
     @ApiKeyRequired
-    public Response create(@Valid User d) {
+    public Response create(@Valid User user) {
 
-        userService.addDepartment(d);
-        return Response.created(uriInfo.getAbsolutePathBuilder().segment(d.getId().toString()).build()).build();
+        try {
+            userRepository.create(user);
+            return Response.created(uriInfo.getAbsolutePathBuilder().segment(user.getId().toString()).build()).build();
+        } catch (Throwable e) {
+            throw new WebApplicationException(CONFLICT);
+        }
     }
 
     @GET
     @Produces(APPLICATION_JSON)
-    @Path("{id}")
-    public Response getDepartment(@PathParam("id") String id) {
+    @Path("search")
+    public Response findByEmail(@QueryParam("email") String email) {
 
-        try {
-
-            return Response.ok(userService.find(id)).build();
-
-        } catch (SuperException e) {
-            
-            return Response.status(Status.NOT_FOUND).build();
-        }
+        return Response.ok(userRepository.findByEmail(email)
+                .orElseThrow(NotFoundException::new)).build();
     }
 }

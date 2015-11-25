@@ -21,35 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package eu.agilejava.dukes.department;
+package eu.agilejava.dukes.user;
 
-import java.util.List;
-import java.util.UUID;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
+import javax.ejb.ApplicationException;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@Stateless
-public class UserService {
-
-    @Inject
-    private UserRepository userRepository;
-
-    public void addDepartment(User department) {
-        userRepository.create(department);
-    }
-
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
-
-    public User find(final String uuid) throws SuperException {
-
-        return userRepository.findByUUID(uuid)
-                .orElseThrow(SuperException::new);
-    }
-
+@ApplicationException
+public class SuperException extends RuntimeException{
+    
 }

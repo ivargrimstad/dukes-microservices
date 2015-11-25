@@ -25,7 +25,6 @@ package eu.agilejava.dukes.department;
 
 import eu.agilejava.dukes.ApiKeyRequired;
 import javax.ejb.EJB;
-import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -43,7 +42,6 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@ApplicationScoped
 @Path("departments")
 public class DepartmentsResource {
 
