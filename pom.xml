@@ -21,6 +21,7 @@
     <modules>
         <module>dukes-shop</module>
         <module>department</module>
+        <module>user</module>
     </modules>    
 
 </project>
