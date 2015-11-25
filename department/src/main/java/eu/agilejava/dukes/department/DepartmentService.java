@@ -23,19 +23,10 @@
  */
 package eu.agilejava.dukes.department;
 
-import eu.agilejava.snoop.annotation.Snoop;
-import eu.agilejava.snoop.client.SnoopServiceClient;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.GenericType;
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import static javax.ws.rs.core.Response.Status.OK;
 
 /**
  *
@@ -44,42 +35,20 @@ import static javax.ws.rs.core.Response.Status.OK;
 @Stateless
 public class DepartmentService {
 
-    @Snoop(serviceName = "department")
     @Inject
-    private SnoopServiceClient departmentService;
+    private DepartmentRepository departmentRepository;
 
-    public Optional<String> addDepartment(Department department) {
-        
-        department.setUuid(UUID.randomUUID().toString());
-
-        Response response = departmentService.getServiceRoot()
-                .path("departments")
-                .request()
-                .header("X-API-KEY", "ithuset")
-                .post(Entity.entity(department, APPLICATION_JSON));
-
-        if (response.getStatus() == 201) {
-            MultivaluedMap<String, Object> headers = response.getHeaders();
-            return Optional.of(department.getUuid());
-        }
-
-        return Optional.empty();
+    public void addDepartment(Department department) {
+        departmentRepository.create(department);
     }
 
     public List<Department> findAll() {
-        return departmentService.getServiceRoot()
-                .path("departments")
-                .request(APPLICATION_JSON)
-                .get(new GenericType<List<Department>>() {
-                });
-
+        return departmentRepository.findAll();
     }
 
     public Department find(final String uuid) throws SuperException {
 
-        return departmentService.simpleGet("departments/" + uuid)
-                .filter(r -> r.getStatus() == OK.getStatusCode())
-                .map(r -> r.readEntity(Department.class))
+        return departmentRepository.findByUUID(uuid)
                 .orElseThrow(SuperException::new);
     }
 
