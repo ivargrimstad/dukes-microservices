@@ -24,41 +24,21 @@
 package eu.agilejava.dukes.department;
 
 import java.io.Serializable;
-import javax.persistence.Cacheable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.AUTO;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@Entity
-@Table(name = "department", uniqueConstraints
-        = @UniqueConstraint(columnNames = "uuid"))
+@XmlRootElement
 public class Department implements Serializable {
 
     private static final long serialVersionUID = 675831561365333123L;
 
-    @Id
-    @GeneratedValue(strategy = AUTO)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "uuid")
     private String uuid;
 
-    @Column(name = "name")
-    @NotNull
-    @Size(min = 2, max = 30, message = "ett riktigt namn tack!!")
     private String name;
 
     public Long getId() {

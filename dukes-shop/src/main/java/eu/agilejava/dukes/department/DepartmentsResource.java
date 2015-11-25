@@ -24,6 +24,7 @@
 package eu.agilejava.dukes.department;
 
 import eu.agilejava.dukes.ApiKeyRequired;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.validation.Valid;
@@ -34,6 +35,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -62,7 +64,7 @@ public class DepartmentsResource {
     @Produces(APPLICATION_JSON)
     public Response allDepartments() {
 
-        return Response.ok(departmentService.findAll()).build();
+        return Response.ok(new GenericEntity<List<Department>>(departmentService.findAll()) {}).build();
     }
 
     /**
@@ -79,7 +81,7 @@ public class DepartmentsResource {
 
         String uuid = departmentService.addDepartment(d)
                 .orElseThrow(SuperException::new);
-        
+
         return Response.created(uriInfo.getAbsolutePathBuilder().segment(uuid).build()).build();
     }
 
@@ -93,7 +95,7 @@ public class DepartmentsResource {
             return Response.ok(departmentService.find(id)).build();
 
         } catch (SuperException e) {
-            
+
             return Response.status(Status.NOT_FOUND).build();
         }
     }
