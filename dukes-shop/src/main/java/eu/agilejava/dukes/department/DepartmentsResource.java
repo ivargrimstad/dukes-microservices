@@ -27,6 +27,8 @@ import eu.agilejava.dukes.ApiKeyRequired;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -54,6 +56,9 @@ public class DepartmentsResource {
 
     @EJB
     private DepartmentService departmentService;
+    
+    @Inject
+    private Event<Department> depEvent;
 
     /**
      * /departments
@@ -82,6 +87,8 @@ public class DepartmentsResource {
         String uuid = departmentService.addDepartment(d)
                 .orElseThrow(SuperException::new);
 
+        depEvent.fire(d);
+        
         return Response.created(uriInfo.getAbsolutePathBuilder().segment(uuid).build()).build();
     }
 
