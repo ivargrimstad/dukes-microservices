@@ -24,13 +24,13 @@
 package eu.agilejava.dukes.department;
 
 import java.io.Serializable;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.enterprise.context.RequestScoped;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@XmlRootElement
+@RequestScoped
 public class Department implements Serializable {
 
     private static final long serialVersionUID = 675831561365333123L;

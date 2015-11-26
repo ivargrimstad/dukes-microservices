@@ -4,7 +4,11 @@
                 template="./../template.xhtml">
 
     <ui:define name="content">
-        A single department
+        <h2>${department.name}</h2>
+        <p>
+            <label>UUID:</label>
+            ${department.uuid}
+        </p>
     </ui:define>
 
 </ui:composition>

@@ -25,6 +25,8 @@ package eu.agilejava.dukes.department;
 
 import eu.agilejava.snoop.annotation.Snoop;
 import eu.agilejava.snoop.client.SnoopServiceClient;
+import eu.agilejava.snoop.client.SnoopServiceUnavailableException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -49,7 +51,7 @@ public class DepartmentService {
     private SnoopServiceClient departmentService;
 
     public Optional<String> addDepartment(Department department) {
-        
+
         department.setUuid(UUID.randomUUID().toString());
 
         Response response = departmentService.getServiceRoot()
@@ -67,12 +69,17 @@ public class DepartmentService {
     }
 
     public List<Department> findAll() {
-        return departmentService.getServiceRoot()
-                .path("departments")
-                .request(APPLICATION_JSON)
-                .get(new GenericType<List<Department>>() {
-                });
 
+        try {
+            return departmentService.getServiceRoot()
+                    .path("departments")
+                    .request(APPLICATION_JSON)
+                    .get(new GenericType<List<Department>>() {
+                    });
+
+        } catch (SnoopServiceUnavailableException e) {
+            return Collections.EMPTY_LIST;
+        }
     }
 
     public Department find(final String uuid) throws SuperException {
