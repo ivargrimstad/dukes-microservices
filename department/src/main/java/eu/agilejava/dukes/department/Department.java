@@ -28,10 +28,13 @@ import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.GenerationType.SEQUENCE;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -49,7 +52,8 @@ public class Department implements Serializable {
     private static final long serialVersionUID = 675831561365333123L;
 
     @Id
-    @GeneratedValue(strategy = AUTO)
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "department_seq")
+   @SequenceGenerator(name = "department_seq", sequenceName = "department_seq", allocationSize = 1, initialValue = 10)
     @Column(name = "id")
     private Long id;
 
