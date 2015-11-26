@@ -30,6 +30,8 @@ import javax.mvc.annotation.Controller;
 import javax.mvc.annotation.View;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -44,12 +46,25 @@ public class DepartmentsController {
 
     @Inject
     private Models models;
-
+    
     @View("departments.xhtml")
     @GET
     public void departments() {
-
         models.put("departments", departmentService.findAll());
+    }
+    
+    @GET
+    @Path("{uuid}")
+    public Response department(@PathParam("uuid") String uuid) {
+        
+        try {
 
+            models.put("department", departmentService.find(uuid));
+            return Response.ok().entity("department.xhtml").build();
+
+        } catch (SuperException e) {
+
+            return Response.status(Response.Status.NOT_FOUND).entity("departments.xhtml").build();
+        }
     }
 }
