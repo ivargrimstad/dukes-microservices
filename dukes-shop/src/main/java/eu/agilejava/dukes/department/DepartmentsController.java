@@ -21,32 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package eu.agilejava.dukes;
+package eu.agilejava.dukes.department;
 
-import eu.agilejava.dukes.department.DepartmentsController;
-import java.util.HashSet;
-import java.util.Set;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import javax.ejb.EJB;
+import javax.inject.Inject;
+import javax.mvc.Models;
+import javax.mvc.annotation.Controller;
+import javax.mvc.annotation.View;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@ApplicationPath("dukes")
-public class MyApplication extends Application {
+@Controller
+@Path("departments")
+public class DepartmentsController {
 
-    @Override
-    public Set<Class<?>> getClasses() {
+    @EJB
+    private DepartmentService departmentService;
 
-        Set<Class<?>> classes = new HashSet<>();
+    @Inject
+    private Models models;
 
-        classes.add(ApiKeyFilter.class);
-        
-        classes.add(ShopController.class);
-        classes.add(DepartmentsController.class);
+    @View("departments.xhtml")
+    @GET
+    public void departments() {
 
-        return classes;
+        models.put("departments", departmentService.findAll());
+
     }
-
 }
