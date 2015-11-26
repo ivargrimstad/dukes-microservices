@@ -23,30 +23,24 @@
  */
 package eu.agilejava.dukes;
 
-import eu.agilejava.dukes.department.DepartmentsController;
-import java.util.HashSet;
-import java.util.Set;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import javax.inject.Inject;
+import javax.mvc.Models;
+import javax.mvc.annotation.Controller;
+import javax.mvc.annotation.View;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 
 /**
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@ApplicationPath("dukes")
-public class MyApplication extends Application {
-
-    @Override
-    public Set<Class<?>> getClasses() {
-
-        Set<Class<?>> classes = new HashSet<>();
-
-        classes.add(ApiKeyFilter.class);
+@Controller
+@Path("")
+public class ShopController {
+    
+    @GET
+    @View("home.xhtml")
+    public void home() {
         
-        classes.add(ShopController.class);
-        classes.add(DepartmentsController.class);
-
-        return classes;
     }
-
 }
