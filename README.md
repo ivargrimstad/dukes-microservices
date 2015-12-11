@@ -1,1 +1,1 @@
-This is Exercise 2
+Duke's Microservices experiment
