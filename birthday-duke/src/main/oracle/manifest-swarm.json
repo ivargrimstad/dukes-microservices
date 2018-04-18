@@ -1,12 +1,12 @@
 {
     "runtime": {
-        "majorVersion": "8"
+        "majorVersion": "9"
     },
-    "command": "java -Dswarm.http.port=$PORT -Dswarm.bind.address=$HOSTNAME -jar cloudee-duke-hollow-swarm.jar cloudee-duke.war",
+    "command": "java -Dswarm.http.port=$PORT -Dswarm.bind.address=$HOSTNAME -jar birthday-duke-hollow-swarm.jar birthday-duke.war",
     "release": {
         "version": "1.0",
         "build": "1",
         "commit": "123"
     },
-    "notes": "Dukes says hello from Swarm"
+    "notes": "Dukes calculates days to your birthday"
 }

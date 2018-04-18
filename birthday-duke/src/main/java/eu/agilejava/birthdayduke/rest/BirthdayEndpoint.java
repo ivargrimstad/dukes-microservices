@@ -23,7 +23,7 @@ public class BirthdayEndpoint {
     @Metered
     public Response doGet(@QueryParam("date") String date) {
 
-        return Response.ok("Days left: " + calculateDaysToBirthday(date)).build();
+        return Response.ok(calculateDaysToBirthday(date)).build();
     }
 
     private int calculateDaysToBirthday(final String birthDate) {
