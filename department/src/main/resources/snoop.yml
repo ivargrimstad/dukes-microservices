@@ -1,5 +1,0 @@
-snoop:
-  host: http://localhost
-  port: 8080
-  serviceRoot: department/resources
-  snoopService: 192.168.59.103:8081/snoop-service/
