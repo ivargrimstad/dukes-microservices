@@ -15,6 +15,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import static java.time.LocalDate.parse;
 import static java.time.temporal.ChronoUnit.DAYS;
 
+/**
+ * Generates a random number between 0 and bound.
+ */
 @Path("random")
 @RequestScoped
 public class RandomEndpoint {
@@ -22,13 +25,10 @@ public class RandomEndpoint {
     @GET
     @Produces("text/plain")
     @Metered
-    public Response doGet(@QueryParam("min") int min, @QueryParam("max") int max) {
+    public Response doGet(@QueryParam("bound") int bound) {
 
-        return Response.ok(
-                ThreadLocalRandom.current()
-                .ints(min, max)
-                        .findAny()
-                        .orElse(-1)
+        return Response.ok(String.format("The winner is: %d",
+                ThreadLocalRandom.current().nextInt(bound))
         ).build();
     }
 }
