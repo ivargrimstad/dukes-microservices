@@ -17,6 +17,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 /**
  * Generates a random number between 0 and bound.
+ * Everyone will get a number. Keep it !
  */
 @Path("random")
 @RequestScoped
@@ -27,7 +28,7 @@ public class RandomEndpoint {
     @Metered
     public Response doGet(@QueryParam("bound") int bound) {
 
-        return Response.ok(String.format("The winner is: %d",
+        return Response.ok(String.format("The winner of a gift certificate is: %d",
                 ThreadLocalRandom.current().nextInt(bound))
         ).build();
     }
